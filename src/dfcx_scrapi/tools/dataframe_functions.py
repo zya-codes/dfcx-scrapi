@@ -377,6 +377,8 @@ class DataframeFunctions(scrapi_base.ScrapiBase):
                             "entity_type": "string",
                         }
                     )
+                    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+                        print(params_df)
 
             else:
                 tp_schema = pd.DataFrame(
@@ -438,6 +440,7 @@ class DataframeFunctions(scrapi_base.ScrapiBase):
                 params = params_df.copy()[
                     params_df["display_name"] == intent_name
                 ].drop(columns="display_name")
+                print(params)
 
             if intent_name not in intents_map.keys():
                 logging.error(
@@ -451,6 +454,8 @@ class DataframeFunctions(scrapi_base.ScrapiBase):
                 params=params,
                 mode=mode,
             )
+            print(new_intent)
+            print(params)
             new_intents[intent_name] = new_intent
             i += 1
             self.progress_bar(i, len(intent_names))
